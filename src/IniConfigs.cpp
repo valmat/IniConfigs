@@ -4,7 +4,7 @@
  *  This is a simplest ini config parser
  *
  *  @author valmat <ufabiz@gmail.com>
- *  @github https://github.com/valmat/inivalues
+ *  @github https://github.com/valmat/IniConfigs
  */
 
 #include "IniConfigs.h"

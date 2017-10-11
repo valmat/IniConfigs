@@ -4,7 +4,7 @@
  *  Class IniValue designed for extracting values from ini entries
  *  
  *  @author valmat <ufabiz@gmail.com>
- *  @github https://github.com/valmat/inivalues
+ *  @github https://github.com/valmat/IniConfigs
  */
 
 #include "IniValue.h"

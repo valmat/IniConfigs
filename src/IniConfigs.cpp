@@ -12,6 +12,20 @@
 
 namespace vlm {
 
+    namespace {
+        /**
+         *  Trim spaces
+         *  @param  string to trim
+         */
+        inline void trim(std::string &str)
+        {
+            // trim from start
+            str.erase(str.begin(), std::find_if(str.begin(), str.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+            // trim from end
+            str.erase(std::find_if(str.rbegin(), str.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), str.end());
+        }
+    }
+
     /**
      *  Constructor
      *  @param      configuration file name
@@ -54,21 +68,10 @@ namespace vlm {
                 
             } else {
                 std::cerr << "IniConfigs: syntax error in line: " << line << " [file: " << file_name << "]" << std::endl;
+                _isValid = false;
             }
         }
         file.close();
-    }
-
-    /**
-     *  Trim spaces
-     *  @param  strig
-     */
-    void IniConfigs::trim(std::string &str) const
-    {
-        // trim from start
-        str.erase(str.begin(), std::find_if(str.begin(), str.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-        // trim from end
-        str.erase(std::find_if(str.rbegin(), str.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), str.end());
     }
 
 }

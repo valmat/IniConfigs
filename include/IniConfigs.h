@@ -58,11 +58,6 @@ namespace vlm {
         }
 
     private:
-        /**
-         *  Trim spaces
-         *  @param  strig
-         */
-        void trim(std::string &str) const;
         
         bool _isValid = true;
         std::unordered_map<std::string, std::string> _map;

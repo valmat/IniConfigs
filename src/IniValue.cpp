@@ -50,6 +50,9 @@ namespace vlm {
         return _value.c_str();
     }
 
+    /**
+     *  Overloading ostream &operator<<
+     */
     std::ostream &operator<< (std::ostream &stream, const IniValue<std::string> &value)
     {
         return stream << value.toString();

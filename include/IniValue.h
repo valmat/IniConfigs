@@ -35,6 +35,12 @@ namespace vlm {
             return _value;
         }
         
+        T get () const
+        {
+            return _value;
+        }
+
+        
     private:
 
         /**
@@ -92,11 +98,22 @@ namespace vlm {
          *  Cast to a bool
          */
         operator IniValue<bool> () const;
+
+        /**
+         *  Cast to nullptr_t
+         */
+        operator IniValue<std::nullptr_t> () const {return nullptr;}
         
         /**
          *  Cast to a const char *
          */
         operator IniValue<const char *> () const;
+
+        /**
+         *  Cast to some custom type
+         */
+        template <typename T>
+        operator IniValue<T> () const;
 
     private:
         
@@ -106,5 +123,7 @@ namespace vlm {
         std::string _value;
     };
 
-    std::ostream &operator<< (std::ostream &, const IniValue<std::string> &);
+    using IniValueString = IniValue<std::string>;
+
+    std::ostream &operator<< (std::ostream &, const IniValueString &);
 }

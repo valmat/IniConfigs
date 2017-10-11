@@ -5,14 +5,30 @@
 //#include "IniValue.h"
 #include "IniConfigs.h"
 
-//using namespace std;
+using vlm::IniValue;
+using vlm::IniValueString;
+
+// Custom casting
+struct A {
+    A()          = default;
+    A(const A &) = default;
+    A(A &&)      = default;
+    A(int x) : a(x) {}
+    int a = 0;
+};
+
+template<>
+//IniValueString::operator IniValue<A> () const {return A(std::stoi(_value));}
+IniValueString::operator IniValue<A> () const {return A(std::stoi(this->toString()));}
+
+
+
 const char *print_bool(bool v) {
     return v ? "Yes" : "No";
 }
 
 int main( int argc, char *argv[])
 {
-    
     vlm::IniConfigs cfg("test.ini");
 
     if(!cfg) {
@@ -22,7 +38,6 @@ int main( int argc, char *argv[])
 
     const std::string name1("value1");
     const std::string name1_("value1_");
-    //int64_t val = cfg.get<int64_t>(name, 5);
     int64_t val1  = cfg.get(name1,  5);
     int64_t val1_ = cfg.get(name1_, 5);
 
@@ -31,12 +46,12 @@ int main( int argc, char *argv[])
     
     std::cout << cfg.get<const char *>("value2",  "default value") << std::endl;
     std::cout << cfg.get<const char *>("value2+", "default value") << std::endl;
-    //std::cout << cfg.get<const char *>("value2++", nullptr)        << std::endl;
 
     //std::cout << cfg.get("value3") << std::endl;
     std::cout.precision(25);
     std::cout << cfg.get("value3",  2.718281828459) << std::endl;
     std::cout << cfg.get("value3+", 2.718281828459) << std::endl;
+    //std::cout << cfg.get("value3", nullptr) << std::endl;
     std::cout << cfg.get("value4",  2.718281828459) << std::endl;
 
     std::cout << cfg.get<float>      ("value4",  2.718281828459) << std::endl;
@@ -51,16 +66,9 @@ int main( int argc, char *argv[])
     std::cout << '[' << cfg.get<std::string>("value7", "value7").toString() << ']' << std::endl;
     std::cout << '[' << cfg.get<std::string>("value7", "value7") << ']' << std::endl;
 
-    //std::cout << '[' << cfg.get("value7", "value7") << ']' << std::endl;
-
     std::cout << '[' << cfg.get("value8", 0) << ']' << std::endl;
     std::cout << '[' << cfg.get("value8", size_t(0)) << ']' << std::endl;
     std::cout << '[' << cfg.get<size_t>("value8", 0) << ']' << std::endl;
-
-
-
-    //std::cout << std::endl << cfg.get<bool>("keyword3", 5) << std::endl;
-    //std::cout << std::endl << cfg.get<size_t>("name3", 4444) << std::endl;
 
     std::cout << '[' << print_bool(cfg.get("boolval0", false)) << ']' << std::endl;
 
@@ -72,6 +80,9 @@ int main( int argc, char *argv[])
     std::cout << '[' << print_bool(cfg.get("boolval5", true)) << ']' << std::endl;
     std::cout << '[' << print_bool(cfg.get("boolval6", true)) << ']' << std::endl;
     std::cout << '[' << print_bool(cfg.get("boolval7", true)) << ']' << std::endl;
+
+    std::cout << '[' << cfg.get("value1",  A()).get().a << ']' << std::endl;
+    std::cout << '[' << cfg.get("value1+", A()).get().a << ']' << std::endl;
 
     return 0;
 }

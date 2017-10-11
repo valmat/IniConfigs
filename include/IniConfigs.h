@@ -10,7 +10,7 @@
 #pragma once
 
 #include "IniValue.h"
-#include <unordered_map>
+#include <map>
 
 
 namespace vlm {
@@ -60,7 +60,7 @@ namespace vlm {
     private:
         
         bool _isValid = true;
-        std::unordered_map<std::string, std::string> _map;
+        std::map<std::string, std::string> _map;
     };
 
 }

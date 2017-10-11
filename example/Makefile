@@ -18,7 +18,7 @@ ${BINFILE}: $(NAME).o
 
 .PHONY: withshared
 withshared: $(NAME).o
-	$(CC) $(NAME).o -L../src -liniconfig $(CFLAGS) -o $(NAME).bin
+	$(CC) $(NAME).o -L../src -L/usr/local/lib -liniconfig $(CFLAGS) -o $(NAME).bin
 	@echo
 	@echo "\033[5;36mBuild complite \033[0m"
 

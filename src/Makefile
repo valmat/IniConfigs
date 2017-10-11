@@ -39,3 +39,15 @@ obj: $(OBJECTS)
 clean:
 	rm -f o/*.o *.a *.so
 
+install:
+	$(CP) ${SRC}/libiniconfig.so /usr/local/lib/libiniconfig.so
+	$(CP) ${SRC}/libiniconfig.a  /usr/local/lib/libiniconfig.a
+	ldconfig
+	#
+	mkdir -p /usr/local/include/vlm/iniconfigs
+	$(CPR) ${SRC}/../include/* /usr/local/include/vlm/iniconfigs/
+
+uninstall:
+	rm -rf /usr/local/include/vlm/iniconfigs
+	rm -f /usr/local/lib/libiniconfig.so
+	rm -f /usr/local/lib/libiniconfig.a

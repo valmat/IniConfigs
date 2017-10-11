@@ -2,8 +2,11 @@
 //#include <fstream>
 //#include <string>
 
-//#include "IniValue.h"
 #include "IniConfigs.h"
+
+// When installed:
+//#include <vlm/iniconfigs/IniConfigs.h>
+
 
 using vlm::IniValue;
 using vlm::IniValueString;

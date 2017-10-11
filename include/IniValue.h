@@ -63,6 +63,10 @@ namespace vlm {
         {
             return _value;
         }
+        std::string toString () const
+        {
+            return _value;
+        }
 
         /**
          *  Casting to integer types
@@ -102,4 +106,5 @@ namespace vlm {
         std::string _value;
     };
 
+    std::ostream &operator<< (std::ostream &, const IniValue<std::string> &);
 }

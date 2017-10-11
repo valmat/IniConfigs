@@ -49,4 +49,9 @@ namespace vlm {
     {
         return _value.c_str();
     }
+
+    std::ostream &operator<< (std::ostream &stream, const IniValue<std::string> &value)
+    {
+        return stream << value.toString();
+    }
 }

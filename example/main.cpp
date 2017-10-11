@@ -21,9 +21,10 @@ struct A {
 };
 
 template<>
-//IniValueString::operator IniValue<A> () const {return A(std::stoi(_value));}
 IniValueString::operator IniValue<A> () const {return A(std::stoi(this->toString()));}
-
+// You can use _value instead of this->toString(), but
+// using private property is bad way (though it is read only, because marked `const`):
+//IniValueString::operator IniValue<A> () const {return A(std::stoi(_value));} 
 
 
 const char *print_bool(bool v) {
@@ -35,7 +36,7 @@ int main( int argc, char *argv[])
     vlm::IniConfigs cfg("test.ini");
 
     if(!cfg) {
-        std::cerr<<"Error with open file "<< "test.ini" << std::endl;
+        std::cerr << "Error with open file " << "test.ini" << std::endl;
         return 1;
     }
 

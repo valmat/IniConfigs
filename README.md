@@ -6,7 +6,7 @@
 vlm::IniConfigs cfg("test.ini");
 
 if(!cfg) {
-    std::cerr<<"Error with open file "<< "test.ini" << std::endl;
+    std::cerr << "Error with open file test.ini" << std::endl;
     return 1;
 }
 
@@ -49,7 +49,7 @@ auto boolval5 = cfg.get("boolval5", true);  // false
 auto boolval6 = cfg.get("boolval6", true);  // false
 auto boolval7 = cfg.get("boolval7", true);  // false
 ```
-You can define your custom custing
+You can define your custom casting
 
 ```cpp
 #include "IniConfigs.h"

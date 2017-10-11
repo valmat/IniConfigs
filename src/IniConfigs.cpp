@@ -34,8 +34,7 @@ namespace vlm {
     {
         std::ifstream file(file_name);
         
-        if(!file)
-        {
+        if(!file) {
             _isValid = false;
             return;
         }
@@ -59,19 +58,17 @@ namespace vlm {
             // parse key and value
             pos = str.find('=');
             if( std::string::npos > pos ) {
-                std::string key = str.substr(  0, pos );
+                std::string key   = str.substr(  0, pos );
                 std::string value = str.substr( pos+1, str.size() );
                 trim(key);
                 trim(value);
                 
                 _map[key] = value;
-                
             } else {
                 std::cerr << "IniConfigs: syntax error in line: " << line << " [file: " << file_name << "]" << std::endl;
                 _isValid = false;
             }
         }
-        file.close();
     }
 
 }

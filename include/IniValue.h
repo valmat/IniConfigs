@@ -78,6 +78,13 @@ namespace vlm {
         operator IniValue<int8_t>  () const;
 
         /**
+         *  Casting to float types
+         */
+        operator IniValue<float>       () const;
+        operator IniValue<double>      () const;
+        operator IniValue<long double> () const;
+
+        /**
          *  Cast to a bool
          */
         operator IniValue<bool> () const;

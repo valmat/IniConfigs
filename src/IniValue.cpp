@@ -26,6 +26,13 @@ namespace vlm {
     IniValue<std::string>::operator IniValue<int8_t>  () const {return std::stoi(_value);}
 
     /**
+     *  Casting to float types
+     */
+    IniValue<std::string>::operator IniValue<float>       () const {return std::stof(_value);}
+    IniValue<std::string>::operator IniValue<double>      () const {return std::stod(_value);}
+    IniValue<std::string>::operator IniValue<long double> () const {return std::stold(_value);}
+
+    /**
      *  Cast to a bool
      */
     IniValue<std::string>::operator IniValue<bool> () const

@@ -34,7 +34,19 @@ int main( int argc, char *argv[])
     //std::cout << cfg.get<const char *>("value2++", nullptr)        << std::endl;
 
     //std::cout << cfg.get("value3") << std::endl;
-    //std::cout << cfg.get("value3+", 2.718281828459)        << std::endl;
+    std::cout.precision(25);
+    std::cout << cfg.get("value3",  2.718281828459) << std::endl;
+    std::cout << cfg.get("value3+", 2.718281828459) << std::endl;
+    std::cout << cfg.get("value4",  2.718281828459) << std::endl;
+
+    std::cout << cfg.get<float>      ("value4",  2.718281828459) << std::endl;
+    std::cout << cfg.get<double>     ("value4",  2.718281828459) << std::endl;
+    std::cout << cfg.get<long double>("value4",  2.718281828459) << std::endl;
+
+
+
+
+
 
     //std::cout << cfg.get<std::string>("value4", "value4")        << std::endl;
     std::cout << '[' << cfg.get<const char *>("value5", "value5") << ']' << std::endl;

@@ -63,7 +63,6 @@ namespace vlm {
             return IniValue<std::string>(cfg->second);
         }
 
-
         /**
          *  Check if ini entry exist
          *  @param      config name

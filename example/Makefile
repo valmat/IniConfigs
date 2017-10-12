@@ -13,6 +13,7 @@ $(NAME).o: $(NAME).cpp
 
 ${BINFILE}: $(NAME).o
 	$(CC) $(NAME).o ../src/libiniconfig.a $(CFLAGS) -o $(NAME).bin
+	#$(CC) $(NAME).o /usr/local/lib/libiniconfig.a $(CFLAGS) -o $(NAME).bin
 	@echo
 	@echo "\033[1;36mBuild complite \033[0m"
 

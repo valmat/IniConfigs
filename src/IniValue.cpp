@@ -41,14 +41,6 @@ namespace vlm {
         std::transform(v.begin(), v.end(), v.begin(), (int (*)(int))std::tolower);
         return ("true" == v || "1" == v || "on" == v);
     }
-    
-    /**
-     *  Cast to a const char *
-     */
-    IniValue<std::string>::operator IniValue<const char *> () const
-    {
-        return _value.c_str();
-    }
 
     /**
      *  Overloading ostream &operator<<

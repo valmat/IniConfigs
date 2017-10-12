@@ -27,7 +27,7 @@ IniValueString::operator IniValue<A> () const {return A(std::stoi(this->toString
 //IniValueString::operator IniValue<A> () const {return A(std::stoi(_value));} 
 
 
-const char *print_bool(bool v) {
+const char * print_bool(bool v) {
     return v ? "Yes" : "No";
 }
 
@@ -48,9 +48,9 @@ int main( int argc, char *argv[])
     std::cout << "[" << name1 << " ]: ["<< val1  << ']' << std::endl;
     std::cout << "[" << name1_ << "]: ["<< val1_ << ']' << std::endl;
     
-    std::cout << cfg.get<const char *>("value2",  "default value") << std::endl;
-    std::cout << cfg.get<const char *>("value2+", "default value") << std::endl;
-
+    std::cout << cfg.get<std::string>("value2",  "default value") << std::endl;
+    std::cout << cfg.get<std::string>("value2+", "default value") << std::endl;
+    
     //std::cout << cfg.get("value3") << std::endl;
     std::cout.precision(25);
     std::cout << cfg.get("value3",  2.718281828459) << std::endl;
@@ -62,9 +62,10 @@ int main( int argc, char *argv[])
     std::cout << cfg.get<double>     ("value4",  2.718281828459) << std::endl;
     std::cout << cfg.get<long double>("value4",  2.718281828459) << std::endl;
 
-
-    std::cout << '[' << cfg.get<const char *>("value5", "value5") << ']' << std::endl;
-    std::cout << '[' << cfg.get<const char *>("value6", "value6") << ']' << std::endl;
+    auto value5 =  cfg.get<std::string>("value5", "value5");
+    auto value6 =  cfg.get<std::string>("value6", "value6");
+    std::cout << '[' << value5 << ']' << std::endl;
+    std::cout << '[' << value6 << ']' << std::endl;
 
     std::cout << '[' << (std::string)cfg.get<std::string>("value7", "value7") << ']' << std::endl;
     std::cout << '[' << cfg.get<std::string>("value7", "value7").toString() << ']' << std::endl;
@@ -87,6 +88,11 @@ int main( int argc, char *argv[])
 
     std::cout << '[' << cfg.get("value1",  A()).get().a << ']' << std::endl;
     std::cout << '[' << cfg.get("value1+", A()).get().a << ']' << std::endl;
+
+    A a1 = cfg.get("value1",  A());
+    A a2 = cfg.get("value1+", A());
+    std::cout << '[' << a1.a << ']' << std::endl;
+    std::cout << '[' << a2.a << ']' << std::endl;
 
     return 0;
 }

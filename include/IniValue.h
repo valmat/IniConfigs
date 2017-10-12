@@ -105,11 +105,6 @@ namespace vlm {
         operator IniValue<std::nullptr_t> () const {return nullptr;}
         
         /**
-         *  Cast to a const char *
-         */
-        operator IniValue<const char *> () const;
-
-        /**
          *  Cast to some custom type
          */
         template <typename T>

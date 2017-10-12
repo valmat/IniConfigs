@@ -22,8 +22,8 @@ int64_t value1__      = cfg.get<int64_t>("value1",  defaultValue1); // 1
 // in test.ini
 // value2 = hello world		;value2 comment
 // ;value2+ is skipped
-std::cout << cfg.get<const char *>("value2",  "default value") << std::endl;
-std::cout << cfg.get<const char *>("value2+", "default value") << std::endl;
+std::cout << cfg.get<std::string>("value2",  "default value") << std::endl;
+std::cout << cfg.get<std::string>("value2+", "default value") << std::endl;
 
 // in test.ini
 // value4 = 3.14159263358979361680130282241663053355296142399311
@@ -74,6 +74,11 @@ int main( int argc, char *argv[])
     // value1 = 1
     std::cout << cfg.get("value1",  A()).get().a << std::endl; // 1
     std::cout << cfg.get("value1+", A()).get().a << std::endl; // 0
+
+    A a1 = cfg.get("value1",  A());
+    A a2 = cfg.get("value1+", A());
+    std::cout << a1.a << std::endl; // 1
+    std::cout << a2.a << std::endl; // 0
 
     return 0;
 }

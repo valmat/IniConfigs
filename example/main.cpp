@@ -59,6 +59,9 @@ int main( int argc, char *argv[])
     //std::cout << cfg.get("value3", nullptr) << std::endl;
     std::cout << cfg.get("value4",  2.718281828459) << std::endl;
 
+    std::cout << "Has `value3`?  " << print_bool(cfg.has("value3")) << std::endl;
+    std::cout << "Has `value3+`? " << print_bool(cfg.has("value3+")) << std::endl;
+
     std::cout << cfg.get<float>      ("value4",  2.718281828459) << std::endl;
     std::cout << cfg.get<double>     ("value4",  2.718281828459) << std::endl;
     std::cout << cfg.get<long double>("value4",  2.718281828459) << std::endl;
@@ -86,6 +89,9 @@ int main( int argc, char *argv[])
     std::cout << '[' << print_bool(cfg.get("boolval5", true)) << ']' << std::endl;
     std::cout << '[' << print_bool(cfg.get("boolval6", true)) << ']' << std::endl;
     std::cout << '[' << print_bool(cfg.get("boolval7", true)) << ']' << std::endl;
+
+    std::cout << "Is ini configs empty? " << print_bool(cfg.empty()) << std::endl;
+    std::cout << "Ini entries number:  " << cfg.size() << std::endl;
 
     std::cout << '[' << cfg.get("value1",  A()).get().a << ']' << std::endl;
     std::cout << '[' << cfg.get("value1+", A()).get().a << ']' << std::endl;

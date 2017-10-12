@@ -62,7 +62,34 @@ namespace vlm {
             
             return IniValue<std::string>(cfg->second);
         }
-        
+
+
+        /**
+         *  Check if ini entry exist
+         *  @param      config name
+         */
+        bool has(const std::string &name) const
+        {
+            return _map.find(name) != _map.cend();
+        }
+
+        /**
+         *  Check if ini configs does have not entries
+         */
+        bool empty() const
+        {
+            return _map.empty();
+        }
+
+        /**
+         *  Returns counts of ini entries
+         */
+        size_t size() const
+        {
+            return _map.size();
+        }
+
+ 
         ~IniConfigs() = default;
         
         /**

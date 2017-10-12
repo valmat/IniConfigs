@@ -55,13 +55,13 @@ You can define your custom casting
 #include "IniConfigs.h"
 using vlm;
 
-// Custom casting
+// Custom type:
 struct A {
     A() = default;
     A(int x) : a(x) {}
     int a = 0;
 };
-
+// Casting custom type:
 template<>
 IniValueString::operator IniValue<A> () const {
   return A(std::stoi(this->toString()));
@@ -73,12 +73,18 @@ int main( int argc, char *argv[])
     // in test.ini
     // value1 = 1
     std::cout << cfg.get("value1",  A()).get().a << std::endl; // 1
-    std::cout << cfg.get("value1+", A()).get().a << std::endl; // 0
+    std::cout << cfg.get("value1+", A()).get().a << std::endl; // 0 (default)
 
     A a1 = cfg.get("value1",  A());
     A a2 = cfg.get("value1+", A());
     std::cout << a1.a << std::endl; // 1
-    std::cout << a2.a << std::endl; // 0
+    std::cout << a2.a << std::endl; // 0 (default)
+
+    // The same:
+    A a3 = cfg.get<A>("value1");
+    A a4 = cfg.get<A>("value1+");
+    std::cout << a3.a << std::endl; // 1
+    std::cout << a4.a << std::endl; // 0 (default)
 
     return 0;
 }

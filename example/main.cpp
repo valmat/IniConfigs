@@ -11,7 +11,7 @@
 using vlm::IniValue;
 using vlm::IniValueString;
 
-// Custom casting
+// Custom type:
 struct A {
     A()          = default;
     A(const A &) = default;
@@ -19,13 +19,12 @@ struct A {
     A(int x) : a(x) {}
     int a = 0;
 };
-
+// Casting custom type:
 template<>
 IniValueString::operator IniValue<A> () const {return A(std::stoi(this->toString()));}
 // You can use _value instead of this->toString(), but
 // using private property is bad way (though it is read only, because marked `const`):
 //IniValueString::operator IniValue<A> () const {return A(std::stoi(_value));} 
-
 
 const char * print_bool(bool v) {
     return v ? "Yes" : "No";
@@ -51,7 +50,9 @@ int main( int argc, char *argv[])
     std::cout << cfg.get<std::string>("value2",  "default value") << std::endl;
     std::cout << cfg.get<std::string>("value2+", "default value") << std::endl;
     
-    //std::cout << cfg.get("value3") << std::endl;
+    std::cout << cfg.get<std::string>("value3") << std::endl;
+    std::cout << cfg.get<std::string>("value3+") << std::endl;
+
     std::cout.precision(25);
     std::cout << cfg.get("value3",  2.718281828459) << std::endl;
     std::cout << cfg.get("value3+", 2.718281828459) << std::endl;
@@ -93,6 +94,12 @@ int main( int argc, char *argv[])
     A a2 = cfg.get("value1+", A());
     std::cout << '[' << a1.a << ']' << std::endl;
     std::cout << '[' << a2.a << ']' << std::endl;
+
+    // The same
+    A a3 = cfg.get<A>("value1");
+    A a4 = cfg.get<A>("value1+");
+    std::cout << '[' << a3.a << ']' << std::endl;
+    std::cout << '[' << a4.a << ']' << std::endl;
 
     return 0;
 }

@@ -46,6 +46,22 @@ namespace vlm {
             
             return IniValue<std::string>(cfg->second);
         }
+
+        /**
+         *  Get ini entry
+         *  @param      config name
+         */
+        template <typename T>
+        IniValue<T> get(const std::string &name) const
+        {
+            auto cfg = _map.find(name);
+            // if key not exist or config value string is empty return default
+            if(cfg == _map.cend() || cfg->second.empty()) {
+                return IniValue<T>(T());
+            }
+            
+            return IniValue<std::string>(cfg->second);
+        }
         
         ~IniConfigs() = default;
         

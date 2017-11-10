@@ -24,6 +24,10 @@ namespace vlm {
          */
         IniConfigs(const char* file_name);
 
+        IniConfigs(const std::string &file_name) :
+            IniConfigs(file_name.data())
+        {}
+
         /**
          *  Get ini entry
          *  @param      config name

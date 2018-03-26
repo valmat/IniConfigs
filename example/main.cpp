@@ -107,5 +107,11 @@ int main( int argc, char *argv[])
     std::cout << '[' << a3.a << ']' << std::endl;
     std::cout << '[' << a4.a << ']' << std::endl;
 
+    cfg.addFile("test1.ini");
+    cfg.addFile("test2.ini");
+    
+    std::cout << "test1fv : " << cfg.get<int>("test1fv") << std::endl;
+    std::cout << "test2fv : " << cfg.get<int>("test2fv") << std::endl;
+
     return 0;
 }

@@ -26,17 +26,12 @@ namespace vlm {
         }
     }
 
-    /**
-     *  Constructor
-     *  @param      configuration file name
-     */
-    IniConfigs::IniConfigs(const char* file_name)
+    // add ini-file
+    bool IniConfigs::addFile(const std::string &file_name)
     {
-        std::ifstream file(file_name);
-        
+        std::ifstream file(file_name, std::ios::in | std::ios::binary);
         if(!file) {
-            _isValid = false;
-            return;
+            return false;
         }
         
         std::string str;
@@ -69,6 +64,7 @@ namespace vlm {
                 _isValid = false;
             }
         }
+        return true;
     }
 
 }

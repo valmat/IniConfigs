@@ -22,11 +22,14 @@ namespace vlm {
          *  Constructor
          *  @param      configuration file name
          */
-        IniConfigs(const char* file_name);
+        IniConfigs() = default;
+        IniConfigs(const std::string &file_name)
+        {
+            _isValid = addFile(file_name);
+        }
 
-        IniConfigs(const std::string &file_name) :
-            IniConfigs(file_name.data())
-        {}
+        // add ini-file
+        bool addFile(const std::string &file_name);
 
         /**
          *  Get ini entry

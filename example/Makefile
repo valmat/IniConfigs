@@ -2,7 +2,7 @@ CC 	 = clang++
 #CC 	 = g++
 
 NAME	 = main
-CFLAGS	 = -std=c++11 -O3 -Wall 
+CFLAGS	 = -std=c++11 -O0 -g -Wall 
 BINFILE  = $(NAME).bin
 
 all: ${BINFILE}

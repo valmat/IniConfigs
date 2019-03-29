@@ -116,5 +116,8 @@ int main( int argc, char *argv[])
     std::cout << '[' << cfg.get<std::string>("strval1") << ']' << std::endl;
     std::cout << '[' << cfg.get<std::string>("strval2") << ']' << std::endl;
 
+    std::cout << '[' << cfg.get<std::string>("content_type1") << ']' << std::endl;
+    std::cout << '[' << cfg.get<std::string>("content_type2") << ']' << std::endl;
+
     return 0;
 }

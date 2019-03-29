@@ -9,6 +9,7 @@
 
 #include "IniConfigs.h"
 #include <algorithm>
+#include <functional>
 
 namespace vlm {
 
@@ -20,9 +21,61 @@ namespace vlm {
         inline void trim(std::string &str)
         {
             // trim from start
-            str.erase(str.begin(), std::find_if(str.begin(), str.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+            str.erase(str.begin(), std::find_if(str.begin(), str.end(), std::not_fn(std::ptr_fun<int, int>(std::isspace))));
             // trim from end
-            str.erase(std::find_if(str.rbegin(), str.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), str.end());
+            str.erase(std::find_if(str.rbegin(), str.rend(), std::not_fn(std::ptr_fun<int, int>(std::isspace))).base(), str.end());
+        }
+
+
+        // inline bool _isspace(char c)
+        // {
+        //     std::cerr << "_isspace: " << "[" << c << "]" << (int)((' ' == c) || ('\t' == c)) << std::endl;
+
+        //     return ((' ' == c) || ('\t' == c) || ('\f' == c) || ('\n' == c) || ('\r' == c) || ('\v' == c));
+        // }
+
+        template<class InputIt, class UnaryPredicate>
+        size_t _count_while(InputIt first, InputIt last, UnaryPredicate p)
+        {
+            size_t ret = 0;
+            for (; first != last && p(*first); ++first) {
+                ret++;
+            }
+            return ret;
+        }
+
+        inline void trim(std::string_view &str)
+        {
+//            std::cerr << "====================================" << std::endl;
+//            std::cerr << "str: " << " [" << str << "]" << std::endl;
+
+            size_t count;
+            // str.remove_prefix(std::min((size_t)std::count_if(str.begin(), str.end(),   std::not1(std::ptr_fun<int, int>(std::isspace)) ), str.size()));
+            // std::not_fn
+            
+            // count = std::count_if(str.begin(), str.end(), std::ptr_fun<int, int>(std::isspace) );
+            count = _count_while(str.begin(), str.end(), [](auto c) {return std::isspace(c);} );
+
+//            std::cerr << "count: " << " [" << count << "]" << std::endl;
+            str.remove_prefix(std::min(count, str.size()));
+//            std::cerr << "str: " << " [" << str << "]" << std::endl;
+            // str.remove_suffix(std::min((size_t)std::count_if(str.rbegin(), str.rend(), std::not1(std::ptr_fun<int, int>(std::isspace)) ), str.size()));
+            // std::not_fn
+            
+
+
+
+
+            // count = std::count_if(str.rbegin(), str.rend(), std::ptr_fun<int, int>(std::isspace) );
+            count = _count_while(str.rbegin(), str.rend(), [](auto c) {return std::isspace(c);} );
+
+//            std::cerr << "count: " << " [" << count << "]" << std::endl;
+            str.remove_suffix(std::min(count, str.size()));
+//            std::cerr << "str: " << " [" << str << "]" << std::endl;
+
+//            std::cerr << "************************************" << std::endl;
+
+
         }
     }
 
@@ -37,7 +90,12 @@ namespace vlm {
         auto &npos = std::string::npos;
         
         std::string str;
-        for(unsigned line = 1; std::getline(file, str); line++) {
+        while(std::getline(file, str)) {
+            
+            // std::cerr << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+
+            // std::cerr << "str: " << " [" << str << "]" << std::endl;
+
             // trim
             trim(str);
             size_t pos = str.find('=');
@@ -45,8 +103,11 @@ namespace vlm {
                 continue;
             }
 
-            std::string key   = str.substr( 0, pos );
-            std::string value = str.substr( pos+1);
+            std::string_view key   (str.data(), pos);
+            std::string_view value (str.data() + pos + 1, str.size() - pos - 1);
+
+            // std::cerr << "key: "   << " [" << key << "]" << std::endl;
+            // std::cerr << "value: " << " [" << value << "]" << std::endl;
 
             // remove comment
             {
@@ -59,6 +120,10 @@ namespace vlm {
                 }
             }
 
+            // std::cerr << "key: " << " [" << key << "]" << std::endl;
+            // std::cerr << "value: " << " [" << value << "]" << std::endl;
+
+
             trim(key);
             trim(value);
 
@@ -66,10 +131,23 @@ namespace vlm {
             if(value.size() > 1 && '"' == value[0] && '"' == value[value.size()-1]) {
                 value = value.substr(1, value.size()-2);
             }
+
+            // std::cerr << "key: " << " [" << key << "]" << std::endl;
+            // std::cerr << "value: " << " [" << value << "]" << std::endl;
+
             
-            // _map.emplace(key, value);
-            _map[key] = value;
+            // _map.emplace(std::string(key), std::string(value));
+            _map[std::string(key)] = std::string(value);
+            // std::cerr << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << std::endl;
         }
+
+
+        // for(auto& [key, value]: _map) {
+        //     std::cerr << "key: " << " [" << key << "]" << std::endl;
+        //     std::cerr << "value: " << " [" << value << "]" << std::endl;
+        //     std::cerr << "_______________________"<< std::endl;
+        // }
+
         return true;
     }
 

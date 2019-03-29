@@ -3,11 +3,11 @@ CC 	 = clang++
 
 NAME	 = libiniconfig
 
-OPT_FLAGS=-O3
+OPT_FLAGS = -O3
 
 #compiler flags
-CPP_FLAGS  = -std=c++11 ${OPT_FLAGS} -I. -I../include -fPIC -c -pedantic -Wall -Wextra
-LD_FLAGS   = -std=c++11 ${OPT_FLAGS} -shared
+CPP_FLAGS  = -std=c++17 ${OPT_FLAGS} -I. -I../include -fPIC -c -pedantic -Wall -Wextra -fno-rtti -fno-exceptions
+LD_FLAGS   = -std=c++17 ${OPT_FLAGS} -shared
 
 CP  = cp -f
 CPR = cp -fR

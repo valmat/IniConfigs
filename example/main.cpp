@@ -113,5 +113,8 @@ int main( int argc, char *argv[])
     std::cout << "test1fv : " << cfg.get<int>("test1fv") << std::endl;
     std::cout << "test2fv : " << cfg.get<int>("test2fv") << std::endl;
 
+    std::cout << '[' << cfg.get<std::string>("strval1") << ']' << std::endl;
+    std::cout << '[' << cfg.get<std::string>("strval2") << ']' << std::endl;
+
     return 0;
 }

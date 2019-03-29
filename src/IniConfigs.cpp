@@ -55,8 +55,13 @@ namespace vlm {
             if( std::string::npos > pos ) {
                 std::string key   = str.substr(  0, pos );
                 std::string value = str.substr( pos+1, str.size() );
+
                 trim(key);
                 trim(value);
+
+                if(value.size() > 1 && '"' == value[0] && '"' == value[value.size()-1]) {
+                    value = value.substr(1, value.size()-2);
+                }
                 
                 _map[key] = value;
             } else {

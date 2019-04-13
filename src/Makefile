@@ -1,13 +1,13 @@
-CC 	 = clang++
-#CC 	 = g++
+# CC 	 = clang++
+CC 	 = g++
 
 NAME	 = libiniconfig
 
 OPT_FLAGS = -O3
 
 #compiler flags
-CPP_FLAGS  = -std=c++17 ${OPT_FLAGS} -I. -I../include -fPIC -c -pedantic -Wall -Wextra -fno-rtti -fno-exceptions
-LD_FLAGS   = -std=c++17 ${OPT_FLAGS} -shared
+CPP_FLAGS  = -std=c++17 ${OPT_FLAGS} -I. -I../include -fPIC -flto -c -pedantic -Wall -Wextra -fno-rtti -fno-exceptions
+LD_FLAGS   = -std=c++17 ${OPT_FLAGS} -shared -flto
 
 CP  = cp -f
 CPR = cp -fR
@@ -19,8 +19,8 @@ SOURCES    = $(wildcard *.cpp)
 OBJECTS    = $(SOURCES:%.cpp=o/%.tmp.o)
 
 all: obj
-	ar rs $(NAME).a $(OBJECTS)
 	$(CC) $(LD_FLAGS) -o $(NAME).so $(OBJECTS)
+	ar rs $(NAME).a $(OBJECTS)
 	@echo
 	@echo "\033[1;33mBuild complite\033[0m"
 

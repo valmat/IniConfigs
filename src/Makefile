@@ -6,14 +6,19 @@ NAME	 = libiniconfig
 OPT_FLAGS = -O3
 
 #compiler flags
-CPP_FLAGS  = -std=c++17 ${OPT_FLAGS} -I. -I../include -fPIC -flto -c -pedantic -Wall -Wextra -fno-rtti -fno-exceptions
-LD_FLAGS   = -std=c++17 ${OPT_FLAGS} -shared -flto
+CPP_FLAGS  = -std=c++17 ${OPT_FLAGS} -I. -I../include -fPIC -c -pedantic -Wall -Wextra -fno-rtti -fno-exceptions
+LD_FLAGS   = -std=c++17 ${OPT_FLAGS} -shared
 
 CP  = cp -f
 CPR = cp -fR
 #CPR = ln -sf
 #CP  = ln -sf
 SRC = `pwd`
+
+ifeq ($(BUILD),lto)   
+	CPP_FLAGS := ${CPP_FLAGS} -flto
+	LD_FLAGS  := ${LD_FLAGS} -flto
+endif
 
 SOURCES    = $(wildcard *.cpp)
 OBJECTS    = $(SOURCES:%.cpp=o/%.tmp.o)
@@ -24,6 +29,15 @@ all: obj
 	@echo
 	@echo "\033[1;33mBuild complite\033[0m"
 
+.PHONY: clean install uninstall uninstall-clean lto
+
+lto:
+	make "BUILD=lto" -j`nproc`
+
+fast:
+	make -j`nproc`
+
+
 o/IniConfigs.tmp.o: IniConfigs.cpp
 	$(CC) IniConfigs.cpp $(CPP_FLAGS) -c -o o/IniConfigs.tmp.o
 
@@ -33,8 +47,6 @@ o/IniValue.tmp.o: IniValue.cpp
 .PHONY: obj
 obj: $(OBJECTS)
 
-
-.PHONY: clean install uninstall uninstall-clean
 
 clean:
 	rm -f o/*.o *.a *.so
